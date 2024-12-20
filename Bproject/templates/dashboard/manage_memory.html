@@ -1,0 +1,131 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+
+{% block body %}
+<div class="container-fluid">
+<div class="row" style="padding-top: 30px">
+
+<div class="col-sm-1" style="color: red">
+</div>
+
+
+<div class="col-sm-10">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table text-primary"></i>
+                    Gerer les  livres
+                </div>
+                <div class="card-body">
+
+            <!-- Breadcrumbs-->
+             {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+            <div class="card mb-3">
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>theme memoire</th>
+                                <th>filiere </th>
+                                <th>Annee de soutenance</th>
+                                <th>Visualiser</th>
+                                <th>Ajouter</th>
+                                <th>Supprimer</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+
+                            	{% if memories %}
+                            	  {% for memory in memories %}
+
+                        
+                                <tr>
+                                  <td>{{ memory.theme }}</td>
+                                  <td> {{ memory.filiere }}</td>
+                                  <td>{{  memory.year  }}</td>
+                                  <td>
+                <a href="{% url 'avmemo' memory.pk %}"><button type="button" class="btn btn-primary"> View</button></a>
+                 </td>
+                <td>
+                <a href="{% url 'aememo' memory.pk %}"><button type="button" class="btn btn-warning"> Edit</button></a>
+        </td>
+        <td>
+          <a href="{% url 'admemo' memory.pk %}"><button type="button" class="btn btn-danger"> Delete</button></a></td>
+                                  
+                                </tr>
+
+                                <!-- end for and if -->
+                                {% endfor %}
+                                {% endif %}
+                            </tbody>
+                        </table>
+
+
+
+
+                          {% if is_paginated %}
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+      <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in paginator.page_range %}
+      {% if page_obj.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </tbody>
+</table>
+	
+
+
+
+        </div>
+    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <script type="text/javascript" src="{% static 'js/jquery-2.1.3.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.dataTables.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
